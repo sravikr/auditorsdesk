@@ -1,0 +1,36 @@
+
+.contact-section {
+  max-width: 725px;
+  margin: 0 auto;
+  padding-top: 150px;
+  padding-bottom: 150px;  
+}
+.contact-inner-tab {
+  padding: 50px 90px;
+  background: var(--color-white);
+  border: var(--border-1px);
+  border-radius: var(--border-radius-10);
+}
+
+.contact-section .p-tabview .p-tabview-nav li .p-tabview-nav-link{
+  background-color: transparent;
+  border: none;
+  border-bottom:3px solid var(--color-light-grey) ;
+  padding: 0.5rem;
+  color: var(--color-light-grey);
+  text-transform: uppercase;
+}
+
+.contact-section .p-tabview .p-tabview-nav {
+  border: none;
+  gap: 34px;
+}
+
+.contact-section .p-tabview .p-tabview-header.p-highlight .p-tabview-header-action {
+  color: var(--color-primary-green);
+  border-bottom-color: var(--color-primary-green);
+}
+
+.contact-section .p-tabview .p-tabview-panels {
+  padding: 2.5rem  0;
+}
