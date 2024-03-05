@@ -280,14 +280,14 @@ const tabledata = ref([
         </div>
         <!-- LAST ROW -->
         <div class="row">
-          <div class="col-l12">
+          <div class="col-lg-12">
             <div class="section-title-w-content">
               <h4>
                 <img src="../../assets/icon-auditors.svg" alt="" />Auditors
               </h4>
               <div class="container-fluid">
               <div class="row">
-                <div class="col-l6">
+                <div class="col-lg-6">
                   
                   <strong class="color-primary mb-3 d-block">Consolidated FS</strong>
                   <div class="table-w-bg-rounded">
@@ -301,7 +301,7 @@ const tabledata = ref([
                   </div>
                 </div>
                 
-                <div class="col-l6">
+                <div class="col-lg-6">
                   <strong class="color-primary mb-3 d-block">Standalone FS</strong>
                   <div class="table-w-bg-rounded">
                     <div class="card">

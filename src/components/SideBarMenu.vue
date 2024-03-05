@@ -19,11 +19,11 @@ import IconAnalysisVue from './icons/IconAnalysis.vue';
 const menuItems = [
   { id: 1, label: 'Home', route: '/dashboard', icon: 'visibility' },
   { id: 2, label: 'Analysis', route: '/home', icon:"analysis"  },
-  { id: 3, label: 'Stakeholders', route: '/home', icon: 'chart' },
+  { id: 3, label: 'Stakeholders', route: '/directors/related-party-transaction', icon: 'chart' },
   { id: 4, label: 'Compliances', route: '/home', icon: 'chart' },
-  { id: 5, label: 'Observations', route: '/Observation', icon: 'chart' },
-  { id: 6, label: 'Feedback', route: '/home', icon: 'chart' },
-  { id: 7, label: 'Support', route: '/support', icon: 'chart' },
+  { id: 5, label: 'Observations', route: '/Observation', icon: 'flag' },
+  { id: 6, label: 'Feedback', route: '/home', icon: 'chat' },
+  { id: 7, label: 'Support', route: '/support', icon: 'support' },
   
   
   // Add more menu items as needed

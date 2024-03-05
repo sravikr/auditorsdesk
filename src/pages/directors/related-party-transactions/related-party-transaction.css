@@ -1,0 +1,100 @@
+.filter-multiselect .p-multiselect-trigger svg {
+  display: none;
+}
+.filter-multiselect .p-multiselect-trigger:after {
+  content: "\ef4f";
+  font-family: 'Material Symbols Outlined';
+  font-size: 26px;
+  color: var(--color-light-grey);
+}
+.filter-multiselect {
+  border-radius: 10px;
+  border:1px solid  var(--color-light-grey);
+}
+.btn-export {
+  height: 40px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+.p-multiselect-panel .p-multiselect-items .p-multiselect-item .p-checkbox {
+  margin-right: 0.5rem !important;
+}
+
+
+.dashboard-w-sidebar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+  .dashboard-w-sidebar-left {
+    flex: 0 0 calc(100% - 322px);
+    overflow-y: auto;
+  }
+  
+  .dashboard-w-sidebar-right {
+    flex: 0 0 292px;
+    border-radius: 12px;
+    border: var(--border-1px);
+    padding: 17px 14px;
+    
+  }
+  
+}
+.dashboard-w-sidebar-top {
+  display: flex;
+  padding-bottom: 10px;
+  border-bottom: var(--border-1px);
+  margin-bottom: 15px;
+  strong {
+    color: var(--color-primary);
+  }
+}
+.sidebar-action {
+  margin-left: auto;
+   span.material-symbols-outlined {
+    cursor: pointer;
+    &:hover {
+      color: var(--color-primary-green);
+
+    }
+   }
+}
+.sidebar-action-search {
+  margin-bottom: 20px;
+}
+.sidebar-action-search-autocomplete .p-inputtext {
+  padding-left: 2.5rem;
+  font-family: var(--font-family-body);
+  border-radius: 8px;
+  color: var(--color-primary);
+  
+  &:focus-visible {
+    border-color: var(--color-primary-green);
+
+  }
+}
+.sidebar-action-search-autocomplete.p-autocomplete::before {
+  content: "\e8b6";
+  position: absolute;
+  top: 2px;
+  left: 10px;
+  font-family: 'Material Symbols Outlined';
+  font-size: 24px;  
+}
+.sidebar-action-list {
+  ul {
+    gap: 10px;
+    padding-left: 0;
+    display: flex;
+    flex-direction: column;overflow-y: auto;
+    li {
+      list-style: none;
+      .panel-card {
+        border: var(--border-1px);
+      }
+    }
+  }
+}
+
+.dashboard-body-overflow-hidden {
+  overflow: hidden !important;
+}

@@ -13,6 +13,9 @@ onMounted(async () => {
     }
   }
 });
+
+const visible = ref(false);
+
 const value = ref('');
 </script>
 
@@ -25,7 +28,7 @@ const value = ref('');
       <div class="container-negative">
         <div class="container-negative-inner">
           <div class="contact-section">
-            <a href=""
+            <a class="contact-section-redirect" href=""
               ><span class="material-icons-outlined"> chevron_left </span
               >Contact Us</a
             >
@@ -39,25 +42,30 @@ const value = ref('');
                     SEnd message
                   </template>
                   <FloatLabel>
-                    <Textarea v-model="value" rows="5" cols="30" placeholder="Send us a message" />
+                    <Textarea class="w-100" v-model="value" rows="5" cols="30" placeholder="Send us a message" />
                     <label>Message</label>
                   </FloatLabel>
+                  <button type="button" class="btn btn-green">Send message</button>
                 </TabPanel>
                 <TabPanel>
                   <template v-slot:header>
                     <span class="material-icons me-2"> message </span>
                     Live Chat
                   </template>
-                  <p class="m-0">
-                    Sed ut perspiciatis unde omnis iste natus error sit
-                    voluptatem accusantium doloremque laudantium, totam rem
-                    aperiam, eaque ipsa quae ab illo inventore veritatis et
-                    quasi architecto beatae vitae dicta sunt explicabo. Nemo
-                    enim ipsam voluptatem quia voluptas sit aspernatur aut odit
-                    aut fugit, sed quia consequuntur magni dolores eos qui
-                    ratione voluptatem sequi nesciunt. Consectetur, adipisci
-                    velit, sed quia non numquam eius modi.
+                  <div class="call-us-sec message">
+                  
+                  <p class="d-flex align-items-center"><span class="material-symbols-outlined me-2 color-primary-green">
+schedule
+</span>
+Chat working hours: Monday-Friday: 10:00 AM - 7:00 PM IST
+                  
+                  
                   </p>
+                  
+                  
+                    
+                    <button type="button" class="d-flex btn btn-green btn-wide align-items-center"  @click="visible = true" >Start chat</button>
+</div>
                 </TabPanel>
                 <TabPanel>
                   <template v-slot:header>
@@ -66,21 +74,133 @@ const value = ref('');
                     </span>
                     Call us
                   </template>
-
-                  <p class="m-0">
-                    At vero eos et accusamus et iusto odio dignissimos ducimus
-                    qui blanditiis praesentium voluptatum deleniti atque
-                    corrupti quos dolores et quas molestias excepturi sint
-                    occaecati cupiditate non provident, similique sunt in culpa
-                    qui officia deserunt mollitia animi, id est laborum et
-                    dolorum fuga. Et harum quidem rerum facilis est et expedita
-                    distinctio. Nam libero tempore, cum soluta nobis est
-                    eligendi optio cumque nihil impedit quo minus.
+                  <div class="call-us-sec">
+                  <strong class="fs-20">Phone</strong>
+                  <p class="d-flex align-items-center"><span class="material-symbols-outlined me-2 color-primary-green">
+schedule
+</span>
+                    Monday-Friday: 10:00 AM - 7:00 PM IST
+                  
+                  
                   </p>
+                  
+                  <a href="tel:+91-9876543210">+91 98765 43210</a>
+                    
+                    <button type="button" class="d-flex btn btn-green btn-wide align-items-center"><span class="material-symbols-outlined me-2 align-self-center">
+call
+</span>Make call</button>
+</div>
                 </TabPanel>
               </TabView>
             </div>
           </div>
+
+<Dialog class="modal-chat" v-model:visible="visible" modal  :style="{ width: '725px' }" :breakpoints="{ '1199px': '75vw', '575px': '90vw' }">
+  <template v-slot:header>
+                    <div class="chat-header-active">
+                      <span class="active-chat-icon"></span>
+                    <strong>You are connected with Phoenix Baker</strong>
+                    <span class="active-chat-time">6/25/2023 2:20pm</span>
+                  </div>
+                  </template>
+                  <div class="chat-message-container">
+                    <Divider  align="center" type="solid">
+                        <strong>Today, March 24</strong>
+                    </Divider>
+                    <div class="chat-message">
+                      <div class="chat-message-inner">
+                        <div class="chat-message-avatar">
+                          <Avatar image="/src/assets/avatar.png" class="mr-2" size="large" shape="circle" />
+                          <span class="active-chat-icon"></span>
+                        </div>
+                        <div class="chat-message-detail">
+                          <div class="chat-message-detail-top">
+                            <span class="chat-message-detail-left">Phoenix Baker</span>
+                            <span class="chat-message-detail-rt">2:20pm</span>
+                          </div>
+                          <div class="chat-message-detail-btm">
+                            <p>Hey Olivia, can you please review the latest design when you can?</p>
+                          </div>
+                        </div>
+                      </div>
+
+                    </div>
+                    <!-- RIGHT -->
+                    <div class="chat-message right">
+                      <div class="chat-message-inner">
+                        <div class="chat-message-detail">
+                          <div class="chat-message-detail-top">
+                            <span class="chat-message-detail-left">You</span>
+                            <span class="chat-message-detail-rt">2:20pm</span>
+                          </div>
+                          <div class="chat-message-detail-btm">
+                            <p>Sure thing, I’ll have a look today.</p>
+                          </div>
+                        </div>
+                    </div>
+
+                    </div>
+                    <!-- LEFT -->
+                    <div class="chat-message">
+                      <div class="chat-message-inner">
+                        <div class="chat-message-avatar">
+                          <Avatar image="/src/assets/avatar.png" class="mr-2" size="large" shape="circle" />
+                          <span class="active-chat-icon"></span>
+                        </div>
+                        <div class="chat-message-detail">
+                          <div class="chat-message-detail-top">
+                            <span class="chat-message-detail-left">Phoenix Baker</span>
+                            <span class="chat-message-detail-rt">2:20pm</span>
+                          </div>
+                          <div class="chat-message-detail-btm">
+                            <p>Hey Olivia, can you please review the latest design when you can?</p>
+                          </div>
+                        </div>
+                      </div>
+
+                    </div>
+                    <!-- RIGHT -->
+                    <div class="chat-message right w-bdr">
+                      <div class="chat-message-inner">
+                        
+                        <div class="chat-message-detail">
+                          <div class="chat-message-detail-top">
+                            <span class="chat-message-detail-left">You</span>
+                            <span class="chat-message-detail-rt">2:20pm</span>
+                          </div>
+                          <div class="chat-message-detail-btm">
+                            <div class="chat-message-detail-btm-left">
+                              <span class="material-symbols-outlined color-primary-green">
+                              draft
+                              </span>
+                            </div>
+                            <div class="chat-message-detail-btm-right">
+                              <strong>Tech design requirements.pdf</strong>
+                              <span>200 KB</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                    </div>
+                  </div>
+                  <template v-slot:footer>
+                   <div class="chat-send-message">
+                    <span class="chat-send-attach">
+                      <span class="material-symbols-outlined me-2 ">
+attach_file
+</span>
+</span>
+<InputText type="text" v-model="value" />
+<button class="btn btn-green"> <span class="material-symbols-outlined">
+send
+</span></button>
+                    
+                   
+                  </div>
+                  </template>
+   
+</Dialog>
         </div>
       </div>
     </div>

@@ -255,15 +255,53 @@ const showFilterMenu = ref(false);
 const toggleFilterMenu = () => {
   showFilterMenu.value = !showFilterMenu.value;
 };
+const visible = ref(false);
 </script>
 
 <template>
   <div class="main-container">
     <div class="container-fluid">
-      <div class="sidebar-menu-toggle">
+      <div class="sidebar-menu-toggle" @click="visible = true">
+        
         <img src="/src/assets/icon-observations-1.svg" alt=" observation" />
         Observations
       </div>
+      <Sidebar v-model:visible="visible" >
+        <template #container="{ closeCallback }">
+          <div class="sidebar-menu-submenu">
+          <span class="sidebar-menu-submenu-redirect" @click="visible = false">  <img src="/src/assets/icon-observations-1.svg" alt=" observation" />Observations
+          </span>
+          <ul>
+            <li>
+              <a href="">Analysis</a>
+              <Avatar severity="secondary" v-badge.secondary="1" size="large" shape="circle">
+                <span class="material-symbols-outlined ">
+                  flag
+                </span>
+                </Avatar>
+            </li>
+            <li>
+              <a href="">Stackholders</a>
+              <Avatar severity="secondary" v-badge.secondary="1" size="large" shape="circle">
+                <span class="material-symbols-outlined ">
+                  flag
+                </span>
+                </Avatar>
+            </li>
+            <li>
+             <a href=""> Complainces</a>
+              <Avatar severity="secondary" v-badge.secondary="1" size="large" shape="circle">
+                <span class="material-symbols-outlined ">
+                  flag
+                </span>
+                </Avatar>
+            </li>
+          </ul>
+          </div>
+        </template>
+
+    </Sidebar>
+     
       <div class="page-title">
         <h3>Analysis</h3>
       </div>
