@@ -104,6 +104,7 @@ import Observation from "./pages/observations/Observation.vue";
 import Faq from "./pages/faq/Faq.vue";
 import Support from "./pages/support/Support.vue";
 import RelatedPartyTransaction from "./pages/directors/related-party-transactions/Related-party-transaction.vue";
+import Shareholding from "./pages/directors/shareholding/Shareholding.vue";
 
 const app = createApp(App);
 
@@ -207,6 +208,7 @@ const routes = [
   { path: "/faq", component: Faq },
   { path: "/support", component: Support },
   { path: "/directors/related-party-transaction", component: RelatedPartyTransaction },
+  { path: "/directors/shareholding", component: Shareholding },
   // Add more routes as needed
 ];
 

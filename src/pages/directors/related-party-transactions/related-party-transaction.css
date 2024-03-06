@@ -98,3 +98,26 @@
 .dashboard-body-overflow-hidden {
   overflow: hidden !important;
 }
+
+.w-bg {
+  width: 24px;
+  height: 24px;
+  border-radius: 4px;
+  &.green {
+    background-color: var(--color-primary-green);
+    color: var(--color-white);
+  }
+}
+.icon-w-bg {
+  width: 24px;
+  height: 24px;
+  border-radius: 4px;
+  background: var(--color-light-grey);
+  color: var(--color-white);
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  &.green {
+    background-color: var(--color-primary-green)
+  }
+}

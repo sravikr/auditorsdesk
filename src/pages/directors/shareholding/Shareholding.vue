@@ -1,46 +1,10 @@
 <script setup>
 import { onMounted, ref } from "vue";
-import "./related-party-transaction.css";
+import { useToast } from 'primevue/usetoast';
+import "./shareholding.css";
 let headerHeight = 0; // Initialize with a default value
 const products = ref([]);
-const responsiveOptions = ref([
-  {
-    breakpoint: "1400px",
-    numVisible: 2,
-    numScroll: 1,
-  },
-  {
-    breakpoint: "1199px",
-    numVisible: 3,
-    numScroll: 1,
-  },
-  {
-    breakpoint: "767px",
-    numVisible: 2,
-    numScroll: 1,
-  },
-  {
-    breakpoint: "575px",
-    numVisible: 1,
-    numScroll: 1,
-  },
-]);
 
-const getSeverity = (status) => {
-  switch (status) {
-    case "INSTOCK":
-      return "success";
-
-    case "LOWSTOCK":
-      return "warning";
-
-    case "OUTOFSTOCK":
-      return "danger";
-
-    default:
-      return null;
-  }
-};
 
 onMounted(async () => {
   const header = document.querySelector(".site-header");
@@ -54,9 +18,6 @@ onMounted(async () => {
     }
   }
 
-  // Call the generateDummyProducts function to get dummy data
-  const data = await generateDummyProducts();
-  products.value = data.slice(0, 5);
 
   // Function to calculate and set the dashboard height
   function setDashboardHeight(selector, topPosition) {
@@ -105,21 +66,9 @@ onMounted(async () => {
   });
 });
 
-const generateDummyProducts = () => {
-  const dummyProducts = [];
-
-  for (let i = 1; i <= 20; i++) {
-    dummyProducts.push({
-      id: i,
-      name: `Product ${i}`,
-      price: Math.floor(Math.random() * 100) + 1,
-      status: i % 3 === 0 ? "INSTOCK" : i % 3 === 1 ? "LOWSTOCK" : "OUTOFSTOCK",
-    });
-  }
-
-  return Promise.resolve(dummyProducts);
-};
-const expandedRows = ref([]);
+const expandedRows = ref([
+  
+]);
 const expandableData = ref([
   {
     id:1,
@@ -450,6 +399,38 @@ const groupedCities = ref([
     ],
   },
 ]);
+
+const op = ref();
+const isToggled = ref(false)
+
+const toggle = (event) => {
+    op.value.toggle(event);
+    isToggled.value = !isToggled.value
+
+}
+const expandRow = (rowData) => {
+  console.log("rowData", rowData)
+  // Add logic to determine which row is clicked and add it to expandedRows
+  // You can use the index or ID of the row to identify it
+  const rowIndex = rowData.id;
+  if (!expandedRows.value.includes(rowIndex)) {
+    expandedRows.value.push(rowIndex);
+  } else {
+    expandedRows.value = expandedRows.value.filter((row) => row !== rowIndex);
+  }
+};
+
+const selectedProduct = ref();
+const toast = useToast();
+const onRowSelect = (event) => {
+    toast.add({ severity: 'info', summary: 'Product Selected', detail: 'Name: ' + event.data.name, life: 3000 });
+};
+const onRowUnselect = (event) => {
+    toast.add({ severity: 'warn', summary: 'Product Unselected', detail: 'Name: ' + event.data.name, life: 3000 });
+}
+const isExpanded = (row) => {
+  return row && expandedRows.value.includes(row.id);
+};
 </script>
 
 <template>
@@ -544,16 +525,40 @@ const groupedCities = ref([
 
       <div class="dashboard-w-sidebar">
         <div class="dashboard-w-sidebar-left">
-          <div class="table-w-header-blue rounded-w-bg uppercase ratio">
+          <div class="table-w-header-blue uppercase wo-padding ratio">
+            
             <DataTable
                 paginator
                 :rows="10"
                 :value="expandableData"
-                :size="large"
+                :size="medium"
                 tableStyle="min-width: 80rem"
                 v-model:expandedRows="expandedRows"
-                dataKey="id"
+                dataKey="id"  
+                :expanded-row-class="customExpandedRowClass"
+                :clicked-row="id"
+                v-model:selection="selectedProduct"
+                @rowSelect="onRowSelect" 
+                @rowUnselect="onRowUnselect"
+                selectionMode="single" 
+                :rowClassName="{ 'parent-row-expanded': isExpanded(row) }"
+                
               >
+              <template>
+                <div>
+                  <p-dataTable :value="tableData" :rows="10" :paginator="true" :selectionMode="selectionMode"
+                              selectionChange="onRowSelect" dataKey="id" :expandedRows="expandedRows" rowExpandMode="single"
+                              rowExpandIcon="pi pi-caret-down" rowCollapseIcon="pi pi-caret-up"
+                              rowClassName="{ 'parent-row-expanded': isExpanded(row) }">
+                    <p-column field="name" header="Name" style="min-width: 20%"></p-column>
+                    <template #expansion>
+                      <p-dataTable :value="expandedData" :scrollable="true" scrollHeight="400px" style="min-width: 82rem">
+                        </p-dataTable>
+                    </template>
+                  </p-dataTable>
+                </div>
+              </template>
+
                 <Column field="name" header="Name" style="min-width: 20%"> 
                   <template #body="slotProps">
                     <div class="d-flex align-items-center">
@@ -561,15 +566,32 @@ const groupedCities = ref([
                         <img src="/src/assets/icon-flag-table.svg" alt="" />
                       </span>
                       <span class="text-light-grey">{{ slotProps.data.name }}</span>
-                      <span class="material-symbols-outlined filled text-light-grey ms-1">
+                      <span :class="{ 'text-primary': isToggled }" @click="toggle" class="material-symbols-outlined filled text-light-grey ms-1">
                         error
                       </span>
+                     
                     </div>
-                    
+                    <OverlayPanel class="event-change-overlay" ref="op">
+                        
+                          <ul>
+                            <li>
+                              <span>Event Date</span>
+                              <strong>29 Sep, 2019</strong>
+                              </li>
+                              <li>
+                              <span>Event</span>
+                              <strong>Change in Designation</strong>
+                              </li>
+                              <li>
+                              <span>Designation After Event</span>
+                              <strong>Director</strong>
+                              </li>
+                            </ul>
+                      </OverlayPanel>
                   </template>
                 </Column>
                 
-                <Column  expander field="related_party_transaction" header="Related Party Transaction" style="min-width: 20%">
+                <Column  expander field="related_party_transaction" header="Related Party Transaction" style="min-width: 20%" @click="isExpanded">
                 </Column>
                
                 <Column field="other_directorships" header="Other Directorships"  style="min-width: 20%">
@@ -580,103 +602,25 @@ const groupedCities = ref([
               <template #expansion="expanseProps">
                 
                     
-                  <DataTable :value="expandedData" scrollable scrollHeight="400px"  tableStyle="min-width: 85rem">
-                          <Column field="financial_year" header="Financial Year" style="min-width: 200px">
-                          </Column>
-                          <Column field="entity_type" header="Entity Type" style="min-width: 200px">
-                          </Column>
-                          <Column field="entity_name" header="Entity Name" style="min-width: 250px">
-                          </Column>
-                          <Column field="common_directors" header="Common Directors" style="min-width: 200px">
-                          </Column>
-                          <Column field="relationship" header="Relationship" style="min-width: 200px">
-                          </Column>
-                          <Column field="transaction_type" header="Transaction Type" style="min-width: 200px">
-                          </Column>
-                          
-                          <Column field="amount" header="Amount (Rs. INR)" style="min-width: 200px">
-                          </Column>
+                  <DataTable :value="expandedData" scrollable scrollHeight="400px"  tableStyle="min-width: 82rem">
+                    <div class="shareholding-inner-data">
+                      <span>Shareholding %  
+:
+15%</span><span>
+Number of shares  
+:
+1,18,75,887</span>
+<span>
+Cessation Date
+:
+12 Mar, 2010</span>
+                      </div>
                         </DataTable>
                 
             </template>
                 
               </DataTable>
-            <!-- <DataTable
-              v-model:expandedRows="expandedRows"
-              :value="products"
-              dataKey="id"
-              @rowExpand="onRowExpand"
-              @rowCollapse="onRowCollapse"
-              tableStyle="min-width: 60rem"
-            >
-              <Column expander style="width: 5rem" />
-              <Column field="name" header="Name"></Column>
-              <Column header="Image">
-                <template #body="slotProps">
-                  <img
-                    :src="`https://primefaces.org/cdn/primevue/images/product/${slotProps.data.image}`"
-                    :alt="slotProps.data.image"
-                    class="shadow-4"
-                    width="64"
-                  />
-                </template>
-              </Column>
-              <Column field="price" header="Price">
-                <template #body="slotProps">
-                  {{ formatCurrency(slotProps.data.price) }}
-                </template>
-              </Column>
-              <Column field="category" header="Category"></Column>
-              <Column field="rating" header="Reviews">
-                <template #body="slotProps">
-                  <Rating
-                    :modelValue="slotProps.data.rating"
-                    readonly
-                    :cancel="false"
-                  />
-                </template>
-              </Column>
-              <Column header="Status">
-                <template #body="slotProps">
-                  <Tag
-                    :value="slotProps.data.inventoryStatus"
-                    :severity="getSeverity(slotProps.data)"
-                  />
-                </template>
-              </Column>
-              <template #expansion="slotProps">
-                <div class="p-3">
-                  <h5>Orders for {{ slotProps.data.name }}</h5>
-                  <DataTable :value="slotProps.data.orders">
-                    <Column field="id" header="Id" sortable></Column>
-                    <Column
-                      field="customer"
-                      header="Customer"
-                      sortable
-                    ></Column>
-                    <Column field="date" header="Date" sortable></Column>
-                    <Column field="amount" header="Amount" sortable>
-                      <template #body="slotProps">
-                        {{ formatCurrency(slotProps.data.amount) }}
-                      </template>
-                    </Column>
-                    <Column field="status" header="Status" sortable>
-                      <template #body="slotProps">
-                        <Tag
-                          :value="slotProps.data.status.toLowerCase()"
-                          :severity="getOrderSeverity(slotProps.data)"
-                        />
-                      </template>
-                    </Column>
-                    <Column headerStyle="width:4rem">
-                      <template #body>
-                        <Button icon="pi pi-search" />
-                      </template>
-                    </Column>
-                  </DataTable>
-                </div>
-              </template>
-            </DataTable> -->
+            
           </div>
           
         </div>
